@@ -8,7 +8,10 @@ def displayJobDetails():
 #function to get job list from url 'https://www.indeed.com/jobs?q={role}&l={location}'
 def getJobList(role,location):
     url = 'https://www.indeed.com/jobs?q={role}&l={location}'
-    # Complete the missing part of this function here 
+    # Complete the missing part of this function here
+    source = urllib.request.urlopen(url).read()
+    soup = bs.BeautifulSoup(source, 'lxml')
+    print(soup.get_text())
 
 #save data in JSON file
 def saveDataInJSON(jobDetails):
