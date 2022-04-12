@@ -1,4 +1,6 @@
 #import beautifulsoup and request here
+import bs4 as bs
+import urllib.request
 
 def displayJobDetails():
     print("Display job details")
@@ -19,6 +21,11 @@ def main():
     print("Enter role you want to search")
     role = input()
     # Complete the missing part of this function here
+    print("Enter location: ")
+    location = input()
+    print("Job role: ", role)
+    print("location: ", location)
+    getJobList(role,location)
     
 if __name__ == '__main__':
     main()
