@@ -1,20 +1,31 @@
 #import beautifulsoup and request here
 import bs4 as bs
 import urllib.request
-import requests
 
 def displayJobDetails():
     print("Display job details")
 
 #function to get job list from url 'https://www.indeed.com/jobs?q={role}&l={location}'
 def getJobList(role,location):
-    url = 'https://www.indeed.com/jobs?q={role}&l={location}'
-    url = url.replace("{role}", role)
-    url = url.replace("{location}", location)
+    url = f'https://www.indeed.com/jobs?q={role}&l={location}'
+    url = url.replace(" ", "%20")
     # Complete the missing part of this function here
     source = urllib.request.urlopen(url).read()
-    soup = bs.BeautifulSoup(source, 'lxml')
+    soup = bs.BeautifulSoup(source, 'html.parser')
+    
+    jobs = []
 
+    for job in soup.find_all('div', class_='slider_item'):
+        title = "Title: "+job.find('h2', class_= 'jobTitle').text
+        company = "Company: "+job.find('span', class_= 'companyName').text
+        description = "Description: "+job.find('div', class_= 'job-snippet').text
+        if job.find('div', class_= 'salary-snippet-container') != None:
+            salary = "Salary: "+job.find('div', class_= 'salary-snippet-container').text
+        else: salary = "Salary: Not Provided"
+        job = [title, company, description, salary]
+        jobs.append(job)
+
+    return jobs
 
 #save data in JSON file
 def saveDataInJSON(jobDetails):
@@ -31,7 +42,12 @@ def main():
     location = input()
     print("Job role: ", role)
     print("location: ", location)
-    getJobList(role, location)
+    print("\n\nResults:\n\n")
+    jobs = getJobList(role,location)
+    for job in jobs:
+        for detail in job:
+            print(detail)
+        print("\n\n")
     
 if __name__ == '__main__':
     main()
