@@ -14,10 +14,7 @@ def getJobList(role,location):
     # Complete the missing part of this function here
     source = urllib.request.urlopen(url).read()
     soup = bs.BeautifulSoup(source, 'lxml')
-    print(soup.find('h2', class_='jobTitle').text)
-    print(soup.find('span', class_='companyName').text)
-    print(soup.find('div', class_='job-snippet').text)
-    print(soup.find('salary', class_='salary-snippet-container').text)
+
 
 #save data in JSON file
 def saveDataInJSON(jobDetails):
