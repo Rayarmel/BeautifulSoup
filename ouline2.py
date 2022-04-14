@@ -1,6 +1,7 @@
 #import beautifulsoup and request here
 import bs4 as bs
 import urllib.request
+import requests
 
 def displayJobDetails():
     print("Display job details")
@@ -8,10 +9,15 @@ def displayJobDetails():
 #function to get job list from url 'https://www.indeed.com/jobs?q={role}&l={location}'
 def getJobList(role,location):
     url = 'https://www.indeed.com/jobs?q={role}&l={location}'
+    url = url.replace("{role}", role)
+    url = url.replace("{location}", location)
     # Complete the missing part of this function here
     source = urllib.request.urlopen(url).read()
     soup = bs.BeautifulSoup(source, 'lxml')
-    print(soup.get_text())
+    print(soup.find('h2', class_='jobTitle').text)
+    print(soup.find('span', class_='companyName').text)
+    print(soup.find('div', class_='job-snippet').text)
+    print(soup.find('salary', class_='salary-snippet-container').text)
 
 #save data in JSON file
 def saveDataInJSON(jobDetails):
@@ -28,7 +34,7 @@ def main():
     location = input()
     print("Job role: ", role)
     print("location: ", location)
-    getJobList(role,location)
+    getJobList(role, location)
     
 if __name__ == '__main__':
     main()
