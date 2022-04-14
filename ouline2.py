@@ -1,6 +1,7 @@
 #import beautifulsoup and request here
 import bs4 as bs
 import urllib.request
+import json
 
 def displayJobDetails():
     print("Display job details")
@@ -30,6 +31,8 @@ def getJobList(role,location):
 #save data in JSON file
 def saveDataInJSON(jobDetails):
     #Complete the missing part of this function here
+    file = open("jobDetails.json", "w")
+    json.dump(jobDetails, file, indent = 4)
     print("Saving data to JSON")
 
 #main function
@@ -48,6 +51,8 @@ def main():
         for detail in job:
             print(detail)
         print("\n\n")
+
+    saveDataInJSON(jobs)
     
 if __name__ == '__main__':
     main()
