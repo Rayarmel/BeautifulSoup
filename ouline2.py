@@ -13,11 +13,12 @@ app = Flask(__name__)
 
 @app.route("/")
 def displayJobDetails():
-    response = requests.get('https://raw.githubusercontent.com/Rayarmel/BeautifulSoup/main/jobDetails.json?token=GHSAT0AAAAAABTYTRPJYVBTXIBWPMT2R7Z2YTAVI5A')
-    
-    print(response)
-    responseJSON = json.loads(response)
-    return render_template("index.html", jobs = response.JSON)
+
+    with urllib.request.urlopen('https://raw.githubusercontent.com/Rayarmel/BeautifulSoup/main/jobDetails.json?token=GHSAT0AAAAAABTYTRPJNO6YSGKJV2AV5YHMYTAZ6LQ') as response:
+        source = response.read()
+        responseJSON = json.loads(source)
+
+    return render_template("index.html", jobs = responseJSON)
     
 
 #function to get job list from url 'https://www.indeed.com/jobs?q={role}&l={location}'

@@ -10,10 +10,11 @@
         <h2>Job Details</h2>
         <ul>
             {% for job in jobs %}
-            <li>Title: {{ job["Title"] }}</li>
-            <li>Company: {{ job["Company"] }}</li>
-            <li>Description: {{ job["Description"] }}</li>
-            <li>Salary: {{ job["Salary"] }}</li>
+            <p>Title: {{ job[0] }}</p>
+            <p>Company: {{ job[1] }}</p>
+            <p>Description: {{ job[2] }}</p>
+            <p>Salary: {{ job[3] }}</p>
+            <hr>
             {% endfor %}
         </ul>
     </div>
