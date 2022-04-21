@@ -1,10 +1,24 @@
 #import beautifulsoup and request here
+from turtle import title
+from urllib import response
 import bs4 as bs
 import urllib.request
 import json
+import os
+from flask import Flask, render_template
+import requests
 
+
+app = Flask(__name__)
+
+@app.route("/")
 def displayJobDetails():
-    print("Display job details")
+    response = requests.get('https://raw.githubusercontent.com/Rayarmel/BeautifulSoup/main/jobDetails.json?token=GHSAT0AAAAAABTYTRPJYVBTXIBWPMT2R7Z2YTAVI5A')
+    
+    print(response)
+    responseJSON = json.loads(response)
+    return render_template("index.html", jobs = response.JSON)
+    
 
 #function to get job list from url 'https://www.indeed.com/jobs?q={role}&l={location}'
 def getJobList(role,location):
@@ -31,8 +45,11 @@ def getJobList(role,location):
 #save data in JSON file
 def saveDataInJSON(jobDetails):
     #Complete the missing part of this function here
-    file = open("jobDetails.json", "w")
-    json.dump(jobDetails, file, indent = 4)
+    with open('jobDetails.json') as file:
+        file_data = json.load(file)
+        file_data["jobs"].append(jobDetails)
+        file.seek(0)
+        json.dump(file_data, file, indent = 4)
     print("Saving data to JSON")
 
 #main function
@@ -47,12 +64,15 @@ def main():
     print("location: ", location)
     print("\n\nResults:\n\n")
     jobs = getJobList(role,location)
+
+    #print jobs and details
     for job in jobs:
         for detail in job:
             print(detail)
         print("\n\n")
 
-    saveDataInJSON(jobs)
+    data = {"Title":"test"}
+    saveDataInJSON(data)
     
 if __name__ == '__main__':
     main()

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Flask Template Example</title>
+</head>
+
+<body>
+    <div>
+        <h2>Job Details</h2>
+        <ul>
+            {% for job in jobs %}
+            <li>Title: {{ job["Title"] }}</li>
+            <li>Company: {{ job["Company"] }}</li>
+            <li>Description: {{ job["Description"] }}</li>
+            <li>Salary: {{ job["Salary"] }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+
+</html>
